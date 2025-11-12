@@ -1,0 +1,569 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "e0aea9f1-ec8f-42e3-8b13-766d542a6450",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        -800
+      ],
+      "id": "7be7874c-1c22-4360-ab46-efa7d6f7d0ff",
+      "name": "Webhook",
+      "webhookId": "e0aea9f1-ec8f-42e3-8b13-766d542a6450"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "af24d701-9819-4fa5-af30-2ffbac27954b",
+              "name": "query",
+              "value": "={{ $json.query }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        -800
+      ],
+      "id": "f3b1dc18-01a9-4b09-bcae-52febbe7b936",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.data[0]['option gmail'] }},{{ $json.data[1]['option gmail'] }},{{ $json.data[2]['option gmail'] }}",
+        "subject": "={{ $('Edit Fields').item.json.query.lname }}{{ $('Edit Fields').item.json.query.fname }}",
+        "message": "={{ $('Edit Fields').item.json.query.content }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1056,
+        -800
+      ],
+      "id": "6d33c035-4348-4227-a6c2-d405edec828d",
+      "name": "Send a message",
+      "webhookId": "1f700531-9757-4ccb-bf8b-4cfd280d5ff8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "uMd0fxVFwan2HYf1",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/15PSi6M5ssF-wcTMlC5ifEzl42g7iFld8CxvGtQasJdI/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15PSi6M5ssF-wcTMlC5ifEzl42g7iFld8CxvGtQasJdI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        432,
+        -800
+      ],
+      "id": "b3842f9d-c5b5-4ee1-b8e5-dde6154a7f54",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NpeVaO1dRSHFcieX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 3
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -800
+      ],
+      "id": "51e03baa-aeba-4bd5-a83b-5238c6783516",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "aggregate": "={{ $json['option gmail'] }}",
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        848,
+        -800
+      ],
+      "id": "58cb6bed-6f8c-46d8-b1b3-9efb1d539556",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "path": "e0aea9f1-ec8f-42e3-8b13-766d542a6450",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -768,
+        -368
+      ],
+      "id": "9d798c2b-12e2-490f-9370-44ee5a83b546",
+      "name": "Webhook1",
+      "webhookId": "e0aea9f1-ec8f-42e3-8b13-766d542a6450"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "af24d701-9819-4fa5-af30-2ffbac27954b",
+              "name": "query",
+              "value": "={{ $json.query }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -560,
+        -368
+      ],
+      "id": "070bdc61-4708-4b19-a5db-9d9c627cf5bf",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/15PSi6M5ssF-wcTMlC5ifEzl42g7iFld8CxvGtQasJdI/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15PSi6M5ssF-wcTMlC5ifEzl42g7iFld8CxvGtQasJdI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "이름"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -352,
+        -368
+      ],
+      "id": "8e878b86-f786-41f2-a5fd-63f030b99e3a",
+      "name": "Get row(s) in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NpeVaO1dRSHFcieX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "335c2c60-1f53-428a-834a-46151aff3b1a",
+              "leftValue": "={{ $json['이름'] }}",
+              "rightValue": "황지상",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        48,
+        -368
+      ],
+      "id": "17feb36f-6593-46c4-b97f-73b463347c05",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5a32fa53-a2ea-4c35-83cd-19ed1f745f7f",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "number"
+            },
+            {
+              "id": "adcb3417-7561-43e1-9515-d3f28a8a4373",
+              "name": "이름",
+              "value": "={{ $json['이름'] }}",
+              "type": "string"
+            },
+            {
+              "id": "c2991d45-5383-47a7-82ed-493cfa18e965",
+              "name": "option gmail",
+              "value": "={{ $json['option gmail'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -144,
+        -368
+      ],
+      "id": "6129f7ac-cf3e-495c-a36d-3497d4663970",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/15PSi6M5ssF-wcTMlC5ifEzl42g7iFld8CxvGtQasJdI/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15PSi6M5ssF-wcTMlC5ifEzl42g7iFld8CxvGtQasJdI/edit#gid=0"
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "specifyRange"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        288,
+        -384
+      ],
+      "id": "de3cf51b-353e-4659-b79b-500b6cf25d97",
+      "name": "Get row(s) in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "NpeVaO1dRSHFcieX",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1747967e-c50c-478a-a97f-c9d46875fee4",
+              "leftValue": "={{ $json.row_number }}",
+              "rightValue": "={{ $('If').item.json.row_number }}",
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        480,
+        -384
+      ],
+      "id": "5eff0cae-d341-4dca-8ec9-ade9911b1e6b",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "maxItems": 3,
+        "keep": "lastItems"
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        720,
+        -400
+      ],
+      "id": "b4236cc3-cffa-437e-98ba-c5b0de582351",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "aggregate": "=",
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        944,
+        -400
+      ],
+      "id": "23806b5e-b50d-4140-9d00-ec73ab249f23",
+      "name": "Aggregate2"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.data[0]['option gmail'] }},{{ $json.data[1]['option gmail'] }},{{ $json.data[2]['option gmail'] }}",
+        "subject": "={{ $('Edit Fields1').item.json.query.lname }}{{ $('Edit Fields1').item.json.query.fname }}",
+        "message": "={{ $('Edit Fields1').item.json.query.content }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1184,
+        -400
+      ],
+      "id": "3b59a87a-bf58-4969-b83a-6f6849e67e77",
+      "name": "Send a message2",
+      "webhookId": "1f700531-9757-4ccb-bf8b-4cfd280d5ff8",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "uMd0fxVFwan2HYf1",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet2": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate2": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4e3821ab-7c3d-4faf-ad13-77f79374b5f4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c005e6aab65fb821aa80c48d5a23961c84eb52165b04318ecc3dce73ecd4ccdc"
+  },
+  "id": "lMUenzRo6wcKTNrm",
+  "tags": []
+}
