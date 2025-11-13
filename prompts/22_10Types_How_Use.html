@@ -38,28 +38,47 @@
         .video-item.selected {
             background-color: #4a5568; /* bg-gray-600 */
         }
+
+        /* 뷰 스위처 활성 버튼 */
+        .view-switcher-btn.active {
+            /* [수정] 흰색 배경(bg-white)은 너무 튀었습니다. 
+            레퍼런스(뮤직 앱)처럼 활성 탭은 앱의 강조색(파란색)으로 변경합니다.
+            */
+            background-color: #2563eb; /* bg-blue-600 */
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* 댓글 탭 활성 버튼 */
+        .review-tab-btn.active {
+            color: #ffffff;
+            border-bottom-color: #3b82f6; /* border-blue-500 */
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 flex flex-col h-screen">
+<body class="bg-black text-gray-100 flex flex-col h-screen">
 
     <!-- 1. 상단 헤더 -->
-    <header class="bg-gray-800 border-b border-gray-700 shadow-md">
+    <!-- [수정] bg-gray-900 -> bg-black (True black) + 하단 테두리 추가 -->
+    <header class="bg-black border-b border-gray-800 shadow-md">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <!-- 로고 및 타이틀 -->
             <div class="flex items-center gap-3">
-                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 18h8a2 2 0 002-2V8a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                <!-- [수정] 아이콘 크기 w-8 h-8 -> w-6 h-6 (네이티브 앱처럼) -->
+                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M4 18h8a2 2 0 002-2V8a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                 <h1 class="text-xl font-bold text-white">영상 리뷰 대시보드</h1>
             </div>
             
             <!-- 💥 핵심 기능: 뷰 전환 스위처 💥 -->
-            <div class="flex items-center gap-2 bg-gray-900 p-1 rounded-lg">
-                <button data-view="planning" class="view-switcher-btn active py-2 px-4 rounded-md text-sm font-medium transition-colors">
+            <!-- [수정] 스위처 컨테이너를 bg-gray-900으로 변경하여 배경과 톤 맞춤 -->
+            <div class="flex items-center gap-1 bg-gray-900 p-1 rounded-lg">
+                <button data-view="planning" class="view-switcher-btn py-2 px-4 rounded-md text-sm font-medium text-gray-300 hover:text-white transition-colors">
                     기획팀 (직관적)
                 </button>
-                <button data-view="design" class="view-switcher-btn py-2 px-4 rounded-md text-sm font-medium transition-colors">
+                <button data-view="design" class="view-switcher-btn py-2 px-4 rounded-md text-sm font-medium text-gray-300 hover:text-white transition-colors">
                     디자인팀 (칸반)
                 </button>
-                <button data-view="ops" class="view-switcher-btn py-2 px-4 rounded-md text-sm font-medium transition-colors">
+                <button data-view="ops" class="view-switcher-btn py-2 px-4 rounded-md text-sm font-medium text-gray-300 hover:text-white transition-colors">
                     운영팀 (테이블)
                 </button>
             </div>
@@ -72,25 +91,25 @@
         </div>
     </header>
 
-    <!-- 2. 메인 컨텐츠 영역 (2단 그리드로 변경) -->
-    <main class="flex-1 grid grid-cols-1 md:grid-cols-[360px_1fr] gap-4 p-4 overflow-hidden">
+    <!-- 2. 메인 컨텐츠 영역 (너비 조절 가능하도록 그리드 변경) -->
+    <main id="main-layout" class="flex-1 grid grid-cols-1 md:grid-cols-[360px_4px_1fr] gap-x-4 p-4 overflow-hidden">
 
-        <!-- 2-1. 왼쪽 패널: 비디오 목록 (유지) -->
-        <aside id="video-list-pane" class="bg-gray-800 rounded-lg shadow-lg flex flex-col overflow-hidden">
-            <div class="p-4 border-b border-gray-700">
+        <!-- 2-1. 왼쪽 패널: 비디오 목록 -->
+        <!-- [수정] bg-gray-900 -> bg-black + 패널 구분을 위한 테두리 추가 -->
+        <aside id="video-list-pane" class="bg-black rounded-xl shadow-lg flex flex-col overflow-hidden border border-gray-800">
+            <div class="p-4 border-b border-gray-800">
                 <h2 class="text-lg font-semibold">리뷰 프로젝트 목록</h2>
-                <input type="search" placeholder="프로젝트 검색..." class="w-full mt-3 p-2 bg-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="search" placeholder="프로젝트 검색..." class="w-full mt-3 p-2 bg-gray-800 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
             </div>
             
             <!-- 뷰 전환 컨테이너 -->
             <div id="list-views-container" class="flex-1 overflow-y-auto">
 
-                <!-- 
-                  (1) 기획팀 뷰: 직관적인 카드 
-                  - "Intuitive UI"
-                -->
+                <!-- (1) 기획팀 뷰: 직관적인 카드 -->
                 <div id="view-planning" class="p-4 space-y-3">
-                    <div class="video-item cursor-pointer p-3 rounded-lg hover:bg-gray-700 transition-colors" data-title="[CF] 2025년 신제품 런칭 (A안)" data-status="리뷰 요청" data-timestamp="01:23">
+                    <!-- [수정] 레퍼런스(메일 앱)처럼 검은 배경에 "셀"이 떠있는 느낌을 주기 위해
+                         카드 자체에 배경색(bg-gray-900)을 추가합니다. -->
+                    <div class="video-item cursor-pointer p-3 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors" data-title="[CF] 2025년 신제품 런칭 (A안)" data-status="리뷰 요청" data-timestamp="01:23">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-xs bg-yellow-500 text-gray-900 px-2 py-0.5 rounded-full font-semibold">리뷰 요청</span>
                             <span class="text-xs text-gray-400">2시간 전</span>
@@ -99,7 +118,7 @@
                         <p class="text-sm text-gray-400">담당자: 이 기획</p>
                     </div>
                     
-                    <div class="video-item selected cursor-pointer p-3 rounded-lg hover:bg-gray-700 transition-colors" data-title="[SNS] 챌린지 영상 (B안)" data-status="수정 중" data-timestamp="00:45">
+                    <div class="video-item selected cursor-pointer p-3 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors" data-title="[SNS] 챌린지 영상 (B안)" data-status="수정 중" data-timestamp="00:45">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full font-semibold">수정 중</span>
                             <span class="text-xs text-gray-400">1일 전</span>
@@ -108,7 +127,7 @@
                         <p class="text-sm text-gray-400">담당자: 박 마케터</p>
                     </div>
 
-                    <div class="video-item cursor-pointer p-3 rounded-lg hover:bg-gray-700 transition-colors" data-title="[CEO] 신년사 영상 (최종본)" data-status="승인 완료" data-timestamp="05:10">
+                    <div class="video-item cursor-pointer p-3 rounded-lg bg-gray-900 hover:bg-gray-800 transition-colors" data-title="[CEO] 신년사 영상 (최종본)" data-status="승인 완료" data-timestamp="05:10">
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-xs bg-green-500 text-gray-900 px-2 py-0.5 rounded-full font-semibold">승인 완료</span>
                             <span class="text-xs text-gray-400">3일 전</span>
@@ -118,21 +137,19 @@
                     </div>
                 </div>
 
-                <!-- 
-                  (2) 디자인팀 뷰: 시각적인 칸반 보드 
-                  - "Trendy Dark Mode" (시각적 흐름 강조)
-                -->
+                <!-- (2) 디자인팀 뷰: 시각적인 칸반 보드 -->
                 <div id="view-design" class="p-4 flex gap-4 overflow-x-auto h-full" style="display: none;">
-                    <!-- 칸반 컬럼 -->
+                    <!-- [수정] 칸반 컬럼 색상 변경 bg-gray-800 -> bg-gray-900 -->
                     <div class="flex-shrink-0 w-72 bg-gray-900 rounded-lg p-3">
                         <h3 class="font-semibold mb-3 px-1">리뷰 요청 (3)</h3>
                         <div class="space-y-3">
-                            <div class="video-item cursor-pointer bg-gray-700 p-3 rounded-lg shadow hover:bg-gray-600" data-title="[CF] 2025년 신제품 런칭 (A안)" data-timestamp="01:23">
+                            <!-- [수정] 칸반 카드 색상 변경 bg-gray-700 -> bg-gray-800 -->
+                            <div class="video-item cursor-pointer bg-gray-800 p-3 rounded-lg shadow hover:bg-gray-700" data-title="[CF] 2025년 신제품 런칭 (A안)" data-timestamp="01:23">
                                 <h4 class="font-medium">[CF] 2025년 신제품 런칭 (A안)</h4>
                                 <p class="text-sm text-gray-400 mt-1">이 기획</p>
                                 <img src="https://placehold.co/300x150/000000/FFFFFF?text=Thumb+A" alt="thumbnail" class="mt-2 rounded-md">
                             </div>
-                            <div class="video-item cursor-pointer bg-gray-700 p-3 rounded-lg shadow hover:bg-gray-600" data-title="[Internal] 온보딩 영상" data-timestamp="02:30">
+                            <div class="video-item cursor-pointer bg-gray-800 p-3 rounded-lg shadow hover:bg-gray-700" data-title="[Internal] 온보딩 영상" data-timestamp="02:30">
                                 <h4 class="font-medium">[Internal] 온보딩 영상</h4>
                                 <p class="text-sm text-gray-400 mt-1">김 인사</p>
                             </div>
@@ -142,7 +159,7 @@
                     <div class="flex-shrink-0 w-72 bg-gray-900 rounded-lg p-3">
                         <h3 class="font-semibold mb-3 px-1">수정 중 (1)</h3>
                         <div class="space-y-3">
-                            <div class="video-item selected cursor-pointer bg-gray-700 p-3 rounded-lg shadow hover:bg-gray-600" data-title="[SNS] 챌린지 영상 (B안)" data-timestamp="00:45">
+                            <div class="video-item selected cursor-pointer bg-gray-800 p-3 rounded-lg shadow hover:bg-gray-700" data-title="[SNS] 챌린지 영상 (B안)" data-timestamp="00:45">
                                 <h4 class="font-medium">[SNS] 챌린지 영상 (B안)</h4>
                                 <p class="text-sm text-gray-400 mt-1">박 마케터</p>
                                 <img src="https://placehold.co/300x150/333333/FFFFFF?text=Thumb+B" alt="thumbnail" class="mt-2 rounded-md">
@@ -152,8 +169,8 @@
                     <!-- 칸반 컬럼 -->
                     <div class="flex-shrink-0 w-72 bg-gray-900 rounded-lg p-3">
                         <h3 class="font-semibold mb-3 px-1">승인 완료 (1)</h3>
-                        <div class="space-y-3">
-                            <div class="video-item cursor-pointer bg-gray-700 p-3 rounded-lg shadow hover:bg-gray-600" data-title="[CEO] 신년사 영상 (최종본)" data-timestamp="05:10">
+                        <div classs="space-y-3">
+                            <div class="video-item cursor-pointer bg-gray-800 p-3 rounded-lg shadow hover:bg-gray-700" data-title="[CEO] 신년사 영상 (최종본)" data-timestamp="05:10">
                                 <h4 class="font-medium">[CEO] 신년사 영상 (최종본)</h4>
                                 <p class="text-sm text-gray-400 mt-1">최 비서</p>
                             </div>
@@ -161,12 +178,10 @@
                     </div>
                 </div>
 
-                <!-- 
-                  (3) 운영팀 뷰: 데이터 밀집형 테이블 
-                  - "Data-Dense Table"
-                -->
+                <!-- (3) 운영팀 뷰: 데이터 밀집형 테이블 -->
                 <div id="view-ops" class="overflow-auto" style="display: none;">
                     <table class="w-full min-w-[500px] text-sm text-left">
+                        <!-- [수정] 테이블 헤더 색상 변경 bg-gray-800 -> bg-gray-900 (sticky) -->
                         <thead class="bg-gray-900 sticky top-0">
                             <tr>
                                 <th class="p-3 font-medium">영상 타이틀</th>
@@ -175,33 +190,35 @@
                                 <th class="p-3 font-medium">요청일</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-700">
-                            <tr class="video-item hover:bg-gray-700 cursor-pointer transition-colors" data-title="[CF] 2025년 신제품 런칭 (A안)" data-timestamp="01:23">
+                        <!-- [수정] 테이블 구분선 변경 divide-gray-700 -> divide-gray-800 -->
+                        <tbody class="divide-y divide-gray-800">
+                            <!-- [수정] hover 색상 변경 hover:bg-gray-700 -> hover:bg-gray-800 -->
+                            <tr class="video-item hover:bg-gray-800 cursor-pointer transition-colors" data-title="[CF] 2025년 신제품 런칭 (A안)" data-timestamp="01:23">
                                 <td class="p-3 font-medium text-white">[CF] 2025년... (A안)</td>
                                 <td class="p-3"><span class="text-xs bg-yellow-500 text-gray-900 px-2 py-0.5 rounded-full font-semibold">리뷰 요청</span></td>
                                 <td class="p-3 text-gray-400">이 기획</td>
                                 <td class="p-3 text-gray-400">2025-11-13</td>
                             </tr>
-                            <tr class="video-item selected hover:bg-gray-700 cursor-pointer transition-colors" data-title="[SNS] 챌린지 영상 (B안)" data-timestamp="00:45">
+                            <tr class="video-item selected hover:bg-gray-800 cursor-pointer transition-colors" data-title="[SNS] 챌린지 영상 (B안)" data-timestamp="00:45">
                                 <td class="p-3 font-medium text-white">[SNS] 챌린지... (B안)</td>
                                 <td class="p-3"><span class="text-xs bg-blue-500 text-white px-2 py-0.5 rounded-full font-semibold">수정 중</span></td>
                                 <td class="p-3 text-gray-400">박 마케터</td>
                                 <td class="p-3 text-gray-400">2025-11-12</td>
                             </tr>
-                            <tr class="video-item hover:bg-gray-700 cursor-pointer transition-colors" data-title="[CEO] 신년사 영상 (최종본)" data-timestamp="05:10">
+                            <tr class="video-item hover:bg-gray-800 cursor-pointer transition-colors" data-title="[CEO] 신년사 영상 (최종본)" data-timestamp="05:10">
                                 <td class="p-3 font-medium text-white">[CEO] 신년사... (최종본)</td>
                                 <td class="p-3"><span class="text-xs bg-green-500 text-gray-900 px-2 py-0.5 rounded-full font-semibold">승인 완료</span></td>
                                 <td class="p-3 text-gray-400">최 비서</td>
                                 <td class="p-3 text-gray-400">2025-11-10</td>
                             </tr>
                             <!-- 더미 데이터 -->
-                            <tr class="video-item hover:bg-gray-700 cursor-pointer transition-colors" data-title="[Internal] 온보딩 영상" data-timestamp="02:30">
+                            <tr class="video-item hover:bg-gray-800 cursor-pointer transition-colors" data-title="[Internal] 온보딩 영상" data-timestamp="02:30">
                                 <td class="p-3 font-medium text-white">[Internal] 온보딩 영상</td>
                                 <td class="p-3"><span class="text-xs bg-yellow-500 text-gray-900 px-2 py-0.5 rounded-full font-semibold">리뷰 요청</span></td>
                                 <td class="p-3 text-gray-400">김 인사</td>
                                 <td class="p-3 text-gray-400">2025-11-13</td>
                             </tr>
-                            <tr class="video-item hover:bg-gray-700 cursor-pointer transition-colors" data-title="[PR] 분기 실적 발표" data-timestamp="15:00">
+                            <tr class="video-item hover:bg-gray-800 cursor-pointer transition-colors" data-title="[PR] 분기 실적 발표" data-timestamp="15:00">
                                 <td class="p-3 font-medium text-white">[PR] 분기 실적 발표</td>
                                 <td class="p-3"><span class="text-xs bg-gray-500 text-white px-2 py-0.5 rounded-full font-semibold">대기</span></td>
                                 <td class="p-3 text-gray-400">강 IR</td>
@@ -213,16 +230,22 @@
             </div>
         </aside>
 
-        <!-- 2-2. 오른쪽 메인 영역 (플레이어 + 댓글을 포함하는 flex-col 컨테이너) -->
+        <!-- 2-1b. 너비 조절 핸들 -->
+        <!-- [수정] 리사이저 색상 변경 bg-gray-700 -> bg-gray-800 -->
+        <div id="resizer" class="hidden md:block w-full bg-gray-800 hover:bg-blue-500 transition-colors cursor-col-resize rounded-full"></div>
+
+        <!-- 2-2. 오른쪽 메인 영역 (플레이어 + 댓글) -->
         <div class="flex flex-col gap-4 overflow-hidden">
 
             <!-- 2-2a. 비디오 플레이어 (상단, 60% 높이) -->
-            <section id="player-pane" class="bg-gray-800 rounded-lg shadow-lg flex flex-col p-6 items-center justify-center flex-[3] min-h-0">
+            <!-- [수정] bg-gray-900 -> bg-black + 테두리 추가 -->
+            <section id="player-pane" class="bg-black rounded-xl shadow-lg flex flex-col p-6 items-center justify-center flex-[3] min-h-0 border border-gray-800">
                 <!-- 플레이어 및 컨텐츠 래퍼 (수직 공간을 채우도록) -->
                 <div class="w-full h-full flex flex-col items-center justify-center">
                     <!-- 목업 비디오 플레이어 (가로폭 제한 추가) -->
-                    <div class="w-full max-w-4xl aspect-video bg-black rounded-lg flex items-center justify-center relative">
-                        <svg class="w-20 h-20 text-gray-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+                    <!-- [수정] 목업 플레이어 배경색 변경 bg-black -> bg-gray-950 (구분감) -->
+                    <div class="w-full max-w-4xl aspect-video bg-gray-950 rounded-lg flex items-center justify-center relative">
+                        <svg class="w-20 h-20 text-gray-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.894l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
                         <span id="video-mock-timestamp" class="absolute bottom-4 left-4 bg-black bg-opacity-70 text-white px-3 py-1 rounded-md text-lg font-mono font-bold">00:45 / 03:12</span>
                     </div>
                     
@@ -233,11 +256,11 @@
                         
                         <!-- 승인/반려 버튼 -->
                         <div class="flex gap-4 mt-6">
-                            <button class="flex-1 py-3 px-6 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg shadow-lg transition-transform active:scale-95">
+                            <button class="flex-1 py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-lg transition-transform active:scale-95">
                                 <svg class="w-5 h-5 inline-block -mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
                                 승인
                             </button>
-                            <button class="flex-1 py-3 px-6 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-lg transition-transform active:scale-95">
+                            <button class="flex-1 py-3 px-6 bg-gray-700 hover:bg-gray-600 text-white font-bold rounded-lg shadow-lg transition-transform active:scale-95">
                                 <svg class="w-5 h-5 inline-block -mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 11.293a1 1 0 001.414 1.414L12 10.414l1.293 1.293a1 1 0 001.414-1.414L13.414 9l1.293-1.293a1 1 0 00-1.414-1.414L12 7.586l-1.293-1.293a1 1 0 00-1.414 1.414L10.586 9l-1.293 1.293z" clip-rule="evenodd"></path></svg>
                                 반려 (수정 요청)
                             </button>
@@ -247,75 +270,119 @@
             </section>
             
             <!-- 2-2b. 댓글 (하단, 40% 높이) -->
-            <aside id="review-pane" class="bg-gray-800 rounded-lg shadow-lg flex flex-col overflow-hidden flex-[2] min-h-0">
+            <!-- [수정] bg-gray-900 -> bg-black + 테두리 추가 -->
+            <aside id="review-pane" class="bg-black rounded-xl shadow-lg flex flex-col overflow-hidden flex-[2] min-h-0 border border-gray-800">
                 <!-- 헤더 (댓글/활동로그) -->
-                <div class="p-4 border-b border-gray-700">
-            <!-- 댓글 목록 -->
-            <div id="comment-list" class="flex-1 overflow-y-auto p-4 space-y-5">
-                <!-- 댓글 아이템 1 -->
-                <div class="flex gap-3">
-                    <img src="https://placehold.co/32x32/4A5568/E2E8F0?text=P" alt="Profile" class="w-8 h-8 rounded-full flex-shrink-0">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2">
-                            <span class="font-semibold text-sm">박 마케터</span>
+                <div class="p-4 border-b border-gray-800">
+                    <div class="flex gap-4">
+                        <button id="comment-tab-btn" class="review-tab-btn font-semibold text-white pb-2 border-b-2 border-blue-500">댓글 (3)</button>
+                        <button id="activity-tab-btn" class="review-tab-btn font-semibold text-gray-500 hover:text-white pb-2 border-b-2 border-transparent">활동 로그</button>
+                    </div>
+                </div>
+                
+                <!-- 댓글 목록 -->
+                <div id="comment-list" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 댓글 아이템 1 -->
+                    <div class="flex gap-3">
+                        <img src="https://placehold.co/32x32/4A5568/E2E8F0?text=P" alt="Profile" class="w-8 h-8 rounded-full flex-shrink-0">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-semibold text-sm">박 마케터</span>
+                                <span class="text-xs text-gray-400">1일 전</span>
+                            </div>
+                            <p class="text-sm text-gray-300 mt-1">@김 프로 님, @최 디자인 님, 리뷰 부탁드립니다!</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 댓글 아이템 2 (타임스탬프) -->
+                    <div class="flex gap-3">
+                        <img src="https://placehold.co/32x32/718096/E2E8F0?text=C" alt="Profile" class="w-8 h-8 rounded-full flex-shrink-0">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-semibold text-sm">최 디자인</span>
+                                <span class="text-xs text-gray-400">4시간 전</span>
+                            </div>
+                            <!-- 타임스탬프 (이름 아래, 코멘트 위로 이동) -->
+                            <div class="my-1.5">
+                                <span class="cursor-pointer text-xs font-mono bg-blue-600 text-white px-2 py-0.5 rounded-lg hover:bg-blue-700"
+                                      data-timestamp="00:15">
+                                    00:15
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-300">이 부분 로고 노출 시간이 너무 짧은 것 같아요. 2초 정도 더 늘릴 수 있을까요?</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 댓글 아이템 3 (타임스탬프) -->
+                    <div class="flex gap-3">
+                        <img src="https://placehold.co/32x32/718096/E2E8F0?text=K" alt="Profile" class="w-8 h-8 rounded-full flex-shrink-0">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-semibold text-sm">김 프로</span>
+                                <span class="text-xs text-gray-400">10분 전</span>
+                            </div>
+                            <!-- 타임스탬프 (이름 아래, 코멘트 위로 이동) -->
+                            <div class="my-1.5">
+                                <span class="cursor-pointer text-xs font-mono bg-blue-600 text-white px-2 py-0.5 rounded-lg hover:bg-blue-700"
+                                      data-timestamp="00:45">
+                                    00:45
+                                </span>
+                            </div>
+                            <p class="text-sm text-gray-300">@박 마케터 님, 00:45초경 배경음악 볼륨이 너무 큽니다. 나레이션이 묻혀요. -3dB 정도 조절 필요합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 활동 로그 (목업) -->
+                <div id="activity-log" class="flex-1 overflow-y-auto p-4 space-y-4" style="display: none;">
+                    <!-- Log Item 1 -->
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm"><span class="font-semibold">최 디자인</span> 님이 영상을 <span class="text-green-400">승인</span>했습니다.</p>
+                            <span class="text-xs text-gray-400">3시간 전</span>
+                        </div>
+                    </div>
+                    <!-- Log Item 2 -->
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 11.293a1 1 0 001.414 1.414L12 10.414l1.293 1.293a1 1 0 001.414-1.414L13.414 9l1.293-1.293a1 1 0 00-1.414-1.414L12 7.586l-1.293-1.293a1 1 0 00-1.414 1.414L10.586 9l-1.293 1.293z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm"><span class="font-semibold">김 프로</span> 님이 <span class="text-red-400">수정 요청</span>을 했습니다.</p>
+                            <span class="text-xs text-gray-400">10시간 전</span>
+                        </div>
+                    </div>
+                    <!-- Log Item 3 -->
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center flex-shrink-0">
+                            <!-- Upload Icon -->
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm"><span class="font-semibold">박 마케터</span> 님이 <span class="text-gray-400">v1.2</span>을 업로드했습니다.</p>
                             <span class="text-xs text-gray-400">1일 전</span>
                         </div>
-                        <p class="text-sm text-gray-300 mt-1">@김 프로 님, @최 디자인 님, 리뷰 부탁드립니다!</p>
                     </div>
                 </div>
                 
-                <!-- 댓글 아이템 2 (타임스탬프) -->
-                <div class="flex gap-3">
-                    <img src="https://placehold.co/32x32/718096/E2E8F0?text=C" alt="Profile" class="w-8 h-8 rounded-full flex-shrink-0">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2">
-                            <span class="font-semibold text-sm">최 디자인</span>
-                            <span class="text-xs text-gray-400">4시간 전</span>
-                        </div>
-                        <!-- 타임스탬프 (이름 아래, 코멘트 위로 이동) -->
-                        <div class="my-1.5">
-                            <span class="cursor-pointer text-xs font-mono bg-blue-600 text-white px-2 py-0.5 rounded-lg hover:bg-blue-700"
-                                  data-timestamp="00:15">
-                                00:15
-                            </span>
-                        </div>
-                        <p class="text-sm text-gray-300">이 부분 로고 노출 시간이 너무 짧은 것 같아요. 2초 정도 더 늘릴 수 있을까요?</p>
+                <!-- 댓글 입력 폼 -->
+                <!-- [수정] 댓글 폼 배경 bg-gray-950 -> bg-gray-900 (톤 조정) / 테두리 bg-gray-800 -> bg-gray-700 -->
+                <div id="comment-form" class="p-4 bg-gray-900 border-t border-gray-700">
+                    <div class="relative">
+                        <!-- [수정] 입력창 배경 bg-gray-800 -> bg-gray-700 -->
+                        <textarea id="comment-input" class="w-full bg-gray-700 rounded-lg p-3 pr-28 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" rows="3" placeholder="댓글을 입력하세요..."></textarea>
+                        <button id="add-comment-btn" class="absolute right-2 bottom-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors">
+                            전송
+                        </button>
                     </div>
-                </div>
-                
-                <!-- 댓글 아이템 3 (타임스탬프) -->
-                <div class="flex gap-3">
-                    <img src="https://placehold.co/32x32/718096/E2E8F0?text=K" alt="Profile" class="w-8 h-8 rounded-full flex-shrink-0">
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2">
-                            <span class="font-semibold text-sm">김 프로</span>
-                            <span class="text-xs text-gray-400">10분 전</span>
-                        </div>
-                        <!-- 타임스탬프 (이름 아래, 코멘트 위로 이동) -->
-                        <div class="my-1.5">
-                            <span class="cursor-pointer text-xs font-mono bg-blue-600 text-white px-2 py-0.5 rounded-lg hover:bg-blue-700"
-                                  data-timestamp="00:45">
-                                00:45
-                            </span>
-                        </div>
-                        <p class="text-sm text-gray-300">@박 마케터 님, 00:45초경 배경음악 볼륨이 너무 큽니다. 나레이션이 묻혀요. -3dB 정도 조절 필요합니다.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 댓글 입력 폼 -->
-            <div class="p-4 bg-gray-900 border-t border-gray-700">
-                <div class="relative">
-                    <textarea id="comment-input" class="w-full bg-gray-700 rounded-lg p-3 pr-28 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" rows="3" placeholder="댓글을 입력하세요..."></textarea>
-                    <button id="add-comment-btn" class="absolute right-2 bottom-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg text-sm transition-colors">
-                        전송
+                    <button id="timestamp-btn" class="mt-2 text-xs text-blue-400 hover:text-blue-300">
+                        현재 시간 (00:45)에 댓글 달기
                     </button>
                 </div>
-                <button id="timestamp-btn" class="mt-2 text-xs text-blue-400 hover:text-blue-300">
-                    현재 시간 (00:45)에 댓글 달기
-                </button>
-            </div>
-        </aside>
+            </aside>
 
     </main>
 
@@ -328,11 +395,23 @@
             
             const videoTitleEl = document.getElementById('video-title');
             const mockTimestampEl = document.getElementById('video-mock-timestamp');
+            
+            // --- 댓글/로그 탭 ---
+            const commentTabBtn = document.getElementById('comment-tab-btn');
+            const activityTabBtn = document.getElementById('activity-tab-btn');
             const commentListEl = document.getElementById('comment-list');
+            const activityLogEl = document.getElementById('activity-log');
+            const commentFormEl = document.getElementById('comment-form');
+            
             const commentInputEl = document.getElementById('comment-input');
             const addCommentBtn = document.getElementById('add-comment-btn');
             const timestampBtn = document.getElementById('timestamp-btn');
             
+            // --- 너비 조절 (Resizer) ---
+            const mainLayout = document.getElementById('main-layout');
+            const resizer = document.getElementById('resizer');
+            const videoListPane = document.getElementById('video-list-pane');
+
             let currentTimestamp = '00:45'; // 목업용 현재 시간
 
             // --- 1. 뷰 전환 로직 ---
@@ -341,10 +420,10 @@
                     const viewId = btn.dataset.view;
                     
                     // 모든 버튼 비활성화
-                    viewSwitcherBtns.forEach(b => b.classList.remove('active', 'bg-blue-600', 'text-white'));
+                    viewSwitcherBtns.forEach(b => b.classList.remove('active'));
                     
                     // 클릭한 버튼 활성화
-                    btn.classList.add('active', 'bg-blue-600', 'text-white');
+                    btn.classList.add('active');
                     
                     // 모든 뷰 숨기기
                     listViews.forEach(view => view.style.display = 'none');
@@ -362,13 +441,15 @@
             videoItems.forEach(item => {
                 item.addEventListener('click', () => {
                     // 모든 아이템 선택 해제
-                    videoItems.forEach(i => i.classList.remove('selected', 'bg-gray-600'));
+                    // [수정] 'bg-gray-600' -> 'bg-gray-800' (선택된 셀의 배경색)
+                    videoItems.forEach(i => i.classList.remove('selected', 'bg-gray-700'));
                     
                     // 클릭한 아이템 선택 (모든 뷰에서 동일 클래스로)
                     // data-title이 같은 모든 아이템을 찾아 선택 상태로 만듭니다. (뷰 전환시 일관성)
                     const title = item.dataset.title;
                     document.querySelectorAll(`.video-item[data-title="${title}"]`).forEach(selectedItem => {
-                         selectedItem.classList.add('selected', 'bg-gray-600');
+                         // [수정] 'bg-gray-600' -> 'bg-gray-700' (더 어둡고 은은하게)
+                         selectedItem.classList.add('selected', 'bg-gray-700');
                     });
                     
                     // 플레이어 정보 업데이트
@@ -446,9 +527,64 @@
                 }
             });
 
+            // --- 4. 댓글 / 활동 로그 탭 전환 ---
+            commentTabBtn.addEventListener('click', () => {
+                commentListEl.style.display = 'block';
+                commentFormEl.style.display = 'block';
+                activityLogEl.style.display = 'none';
+                
+                commentTabBtn.classList.add('active');
+                activityTabBtn.classList.remove('active');
+            });
+            
+            activityTabBtn.addEventListener('click', () => {
+                commentListEl.style.display = 'none';
+                commentFormEl.style.display = 'none';
+                activityLogEl.style.display = 'block';
+                
+                commentTabBtn.classList.remove('active');
+                activityTabBtn.classList.add('active');
+            });
+
+
+            // --- 5. 왼쪽 패널 너비 조절 (Resizer) ---
+            const initResize = (e) => {
+                e.preventDefault();
+                document.addEventListener('mousemove', doResize);
+                document.addEventListener('mouseup', stopResize);
+                // 드래그 중 텍스트 선택 방지
+                document.body.style.userSelect = 'none';
+            };
+
+            const doResize = (e) => {
+                const rect = mainLayout.getBoundingClientRect();
+                // p-4 (1rem = 16px) 만큼의 왼쪽 여백을 뺍니다.
+                const paddingLeft = 16; 
+                let newWidth = e.clientX - rect.left - paddingLeft;
+                
+                // 최소/최대 너비 제한
+                if (newWidth < 300) newWidth = 300; // 최소 300px
+                if (newWidth > 600) newWidth = 600; // 최대 600px
+                
+                mainLayout.style.gridTemplateColumns = `${newWidth}px 4px 1fr`;
+            };
+
+            const stopResize = () => {
+                document.removeEventListener('mousemove', doResize);
+                document.removeEventListener('mouseup', stopResize);
+                document.body.style.userSelect = 'auto';
+            };
+
+            resizer.addEventListener('mousedown', initResize);
+
+
+            // --- 초기화 ---
             // 초기 활성화 (기획팀 뷰)
-            document.querySelector('.view-switcher-btn[data-view="planning"]').classList.add('bg-blue-600', 'text-white');
+            document.querySelector('.view-switcher-btn[data-view="planning"]').classList.add('active');
             document.getElementById('view-planning').style.display = 'block';
+            
+            // 초기 활성화 (댓글 탭)
+            commentTabBtn.classList.add('active');
 
         });
     </script>
