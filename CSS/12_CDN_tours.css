@@ -1,0 +1,78 @@
+body {
+    background-color:rgb(248, 248, 248);
+}
+
+.header {
+    background-color:  beige;
+    color: rgb(0, 41, 21);
+    text-align: center;
+    padding: 10px;
+}
+
+.menu {
+    background-color: color(from color srgb r g b);
+    padding: 10px;
+    text-align: center;
+}
+
+.menu a {
+    background-color: rgb(196, 237, 100);
+    padding: 10px 10px;
+    color: rgb(0, 0, 0);
+    margin: 10px;
+    text-decoration: none;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.container {
+    background-color: rgb(248, 248, 248);
+    max-width: 700px;
+    margin:10px auto;
+    
+}
+
+.section {
+    background-color: white;
+    padding: 20px;
+    margin: 10px 10px
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.internal-links a{
+    background-color: rgb(71, 216, 27);
+    padding: 5px 10px;
+    color: whitesmoke;
+    margin: 10px;
+    text-decoration: none;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.contact-info{
+background-color: rgb(238, 238, 238);
+    padding: 5px 10px;
+     border-left: 5px solid #c8ff49;
+
+}
+
+hr {
+    border: 1px solid rgb(221, 221, 221);
+    margin: 50px
+    padding-bottom: 10px;
+}
+
+
+h2 {
+    border-bottom: 2px solid darkcyan;
+    margin: 20px 10;
+    padding-bottom: 10px
+}
+.footer {
+    background-color: beige;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 10px;
+    margin-top: 30px;
+}
