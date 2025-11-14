@@ -41,9 +41,9 @@ body {
 }
 
 .internal-links a{
-    background-color: rgb(71, 216, 27);
+    background-color: rgb(196, 237, 100);
     padding: 5px 10px;
-    color: whitesmoke;
+    color: rgb(0, 0, 0);
     margin: 10px;
     text-decoration: none;
     border-radius: 8px;
